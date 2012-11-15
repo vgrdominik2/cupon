@@ -1,0 +1,27 @@
+backend_ciudad_cambiar:
+    pattern: /cambiar-a-/{ciudad}
+    defaults: { _controller: BackendBundle:Default:ciudadCambiar }
+
+BackendOferta:
+    resource: "@BackendBundle/Resources/config/routing/oferta.yml"
+    prefix: /oferta
+
+BackendCiudad:
+    resource: "@BackendBundle/Resources/config/routing/ciudad.yml"
+    prefix: /ciudad
+
+BackendTienda:
+    resource: "@BackendBundle/Resources/config/routing/tienda.yml"
+    prefix: /tienda
+
+BackendUsuario:
+    resource: "@BackendBundle/Resources/config/routing/usuario.yml"
+    prefix: /usuario
+
+BackendVenta:
+    resource: "@BackendBundle/Resources/config/routing/venta.yml"
+    prefix: /venta
+
+BackendPortada:
+    pattern:  /
+    defaults: { _controller: "BackendBundle:Oferta:index" }

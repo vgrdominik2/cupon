@@ -1,0 +1,31 @@
+{% extends '::frontend.html.twig' %}
+
+{% block title %}{{ 'ofertas.recientes.en' | trans }} {{ ciudad.nombre }}{% endblock %}
+{% block id 'recientes' %}
+
+{% block rss %}
+<link rel="alternate" type="application/rss+xml" title="{{ 'rss.title.text' | trans }} {{ ciudad.nombre }}"
+      href="{{ path('ciudad_reciente', { 'ciudad': ciudad.slug, '_format': 'rss'}) }}"/>
+{% endblock %}
+
+{% block article %}
+<h1>{{ 'ofertas.recientes.en' | trans }} <strong>{{ ciudad.nombre }}</strong></h1>
+
+{% for oferta in ofertas %}
+    {% include 'OfertaBundle:Default:includes/minioferta.html.twig' %}
+{% else %}
+    <p>Esta ciudad todavía no ha publicado ninguna oferta</p>
+{% endfor %}
+{% endblock %}
+
+{% block aside %}
+{{ parent() }}
+<section id="cercanas">
+    <h2>Oferta en otras ciudades</h2>
+    <ul>
+        {% for ciudad in cercanas %}
+        <li><a href="{{ path('ciudad_reciente', { 'ciudad': ciudad.slug, '_format': 'html' }) }}">{{ ciudad.nombre }}</a></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

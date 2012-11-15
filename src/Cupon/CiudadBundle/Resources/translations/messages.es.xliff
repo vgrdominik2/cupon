@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="es" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>ofertas.recientes.en</source>
+                <target>Ofertas recientes en</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>rss.title.text</source>
+                <target>RSS de las ofertas más recientes en</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

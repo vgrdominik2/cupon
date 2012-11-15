@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/oferta/css/normalizar.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/oferta/css/comun.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/backend/css/backend.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block body %}
+<header>
+    <h1><a href="{{ path('BackendPortada') }}">Ofertas</a></h1>
+    <nav>
+        <ul>
+            <li>
+                <a href="{{ path('BackendPortada') }}">Ofertas</a>
+            </li>
+            <li>
+                <a href="{{ path('backend_tienda') }}">Tiendas</a>
+            </li>
+            <li>
+                <a href="{{ path('backend_usuario') }}">Usuarios</a>
+            </li>
+            <li>
+                <a href="{{ path('backend_ciudad') }}">Ciudades</a>
+            </li>
+            <li>
+                <a href="{{ path('backend_venta') }}">Ventas</a>
+            </li>
+            <li>
+                {% render "CiudadBundle:Default:listaCiudades"
+                    with { 'ciudad': app.session.get('ciudad') } %}
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<article>
+    {% block article %}{% endblock %}
+</article>
+{% endblock %}

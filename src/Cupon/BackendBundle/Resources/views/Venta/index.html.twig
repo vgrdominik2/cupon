@@ -1,0 +1,46 @@
+{% extends '::backend.html.twig' %}
+
+{% block id 'venta' %}
+{% block title %}Listado de ventas{% endblock %}
+
+{% block article %}
+<h1>{{ block('title') }}</h1>
+
+<table class="records_list">
+<thead>
+    <tr>
+        <th>Fecha</th>
+        <th>Oferta</th>
+        <th>Usuario</th>
+        <th>Accioens</th>
+    </tr>
+</thead>
+<tbody>
+{%for venta in ventas %}
+    <tr>
+        <td>{{ venta.fecha | date('Y-m-d H:i:s') }}</td>
+        <td>{{ venta.oferta.nombre }}</td>
+        <td>{{ venta.usuario.nombre }}</td>
+        <td>
+            <ul>
+                <li>
+                    <a href="{{ path('backend_venta_ver', { 'idOferta': venta.oferta.id, 'idUsuario': venta.usuario.id }) }}">Ver</a>
+                </li>
+                <li>
+                    <a href="{{ path('backend_venta_actualizar', { 'idOferta': venta.oferta.id, 'idUsuario': venta.usuario.id }) }}">
+                        Modificar
+                    </a>
+                </li>
+            </ul>
+        </td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+
+<ul>
+    <li>
+        <a href=="{{ path('backend_venta_crear') }}">Crear una nueva venta</a>
+    </li>
+</ul>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends '::frontend.html.twig' %}
+
+{% block title %}Tienda {{ tienda.nombre }}{% endblock %}
+{% block id 'tienda' %}
+
+{% block rss %}
+<link rel="akternate" type="application/rss+xml" title="RSS de las ofetas
+más recientes de {{ tienda.nombre }}" href="{{ path('tienda_portada', { 'ciudad': tienda.ciudad.slug, 'tienda': tienda.slug, '_format': 'rss'}) }}"
+{% endblock %}
+
+{% block article %}
+<section id="descricion">
+    <h1>{{ tienda.nombre }}</h1>
+    <p>{{ tienda.descripcion }}</p>
+</section>
+
+<section id="ultimas">
+    <h2>Últimas ofertas publicadas</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Oferta</th>
+                <th>Precio</th>
+                <th>Descuento</th>
+                <th>Compras</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for oferta in ofertas %}
+            <tr>
+                <td>{{ oferta.fechaPublicacion | date() }}</td>
+                <td>
+                    <a href="{{ path('oferta', {'ciudad': oferta.ciudad.slug, 'slug': oferta.slug }) }}">
+                        {{ oferta.nombre }}
+                    </a>
+                </td>
+                <td>{{ oferta.precio }} &euro;</td>
+                <td>{{ oferta.descuento }} &euro;</td>
+                <td>{{ oferta.compras }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">
+                    Esta tienda no ha publicado ninguna oferta
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
+
+{% block aside %}
+{{ parent() }}
+<section id="cercanas">
+    <h2>Otras tiendas en {{ tienda.ciudad.nombre }}</h2>
+    <ul>
+        {% for tienda in cercanas %}
+        <li>
+            <a href="{{ path('tienda_portada', { 'ciudad': tienda.ciudad.slug, 'tienda': tienda.slug})}}">
+                {{ tienda.nombre }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

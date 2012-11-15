@@ -1,0 +1,5 @@
+ciudad_reciente:
+    pattern: /{ciudad}/recientes.{_format}
+    defaults: { _controller: CiudadBundle:Default:recientes }
+    requirements:
+        _format: html|rss

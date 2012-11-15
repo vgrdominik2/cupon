@@ -1,0 +1,76 @@
+{% extends '::backend.html.twig' %}
+
+{% block id 'oferta' %}
+{% block title %}Listado de ofertas{% endblock %}
+
+{% block article %}
+<h1>{{ block('title') }}</h1>
+
+{{ simple_paginator_render('BackendPortada', null, {
+'container_class': 'paginador',
+'previousPageText': 'Anterior',
+'nextPageText': 'Siguiente',
+'currentClass': 'actual',
+'firstPageText': 'Primera',
+'lastPageText': 'Última'
+}) }}
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Descuento</th>
+            <th>Fecha_publicacion</th>
+            <th>Fecha_expiracion</th>
+            <th>Compras</th>
+            <th>Umbral</th>
+            <th>Revisada</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('oferta_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nombre }}</td>
+            <td>{{ entity.precio }}</td>
+            <td>{{ entity.descuento }}</td>
+            <td>{% if entity.fechapublicacion %}{{ entity.fechapublicacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.fechaexpiracion %}{{ entity.fechaexpiracion|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.compras }}</td>
+            <td>{{ entity.umbral }}</td>
+            <td>{{ entity.revisada }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('oferta_show', { 'id': entity.id }) }}">Ver</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('oferta_edit', { 'id': entity.id }) }}">Modificar</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('oferta_new') }}">
+            Crear una nueva oferta
+        </a>
+    </li>
+</ul>
+
+{{ simple_paginator_render('BackendPortada', null, {
+'container_class': 'paginador',
+'previousPageText': 'Anterior',
+'nextPageText': 'Siguiente',
+'currentClass': 'actual',
+'firstPageText': 'Primera',
+'lastPageText': 'Última'
+}) }}
+{% endblock %}

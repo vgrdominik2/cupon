@@ -1,0 +1,3 @@
+oferta:
+    pattern: /{ciudad}/ofertas/{slug}
+    defaults: { _controller: OfertaBundle:Default:oferta }

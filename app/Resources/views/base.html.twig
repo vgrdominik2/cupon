@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" charset="text/html; charset=utf-8" />
+        <title>{% block title %}{% endblock %} | Cupon</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        {% block rss %}{% endblock %}
+    </head>
+    <body id="{% block id '' %}">
+        {% block body %}{% endblock %}
+
+        <footer>
+            &copy; {{ 'now' | date('Y') }} - Cupon
+            <a href="{{ path('pagina_estatica', { 'pagina': 'ayuda' }) }}">{{ 'ayuda' | trans }}</a>
+            <a href="{{ path('pagina_estatica', { 'pagina': 'contacto' }) }}">{{ 'contacto' | trans }}</a>
+            <a href="{{ path('pagina_estatica', { 'pagina': 'privacidad' }) }}">{{ 'privacidad' | trans }}</a>
+            <a href="{{ path('pagina_estatica', { 'pagina': 'sobre-nosotros' }) }}">{{ 'sobre.nosotros' | trans }}</a>
+
+            {% set locale = app.request.locale %}
+
+            {% if locale == 'es' %}
+                <span>{{ 'espanol' | trans }}</span>
+                <a href="{{ path('portada', { '_locale': 'en', 'ciudad': ciudad_por_defecto }) }}">{{ 'english' | trans }}</a>
+            {% elseif locale == 'en' %}
+                <a href="{{ path('portada', { '_locale': 'es', 'ciudad': ciudad_por_defecto}) }}">{{ 'espanol' | trans }}</a>
+                <span>{{ 'english' | trans }}</span>
+            {% endif %}
+        </footer>
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

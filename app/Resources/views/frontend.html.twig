@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% set ciudadSeleccionada = app.request.attributes.get('ciudad', ciudad_por_defecto) %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/oferta/css/normalizar.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/oferta/css/comun.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/oferta/css/frontend.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('bundles/oferta/js/frontend.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<header>
+    <h1><a href="{{ path('_portada') }}">CUPON</a></h1>
+    <nav>
+        <ul>
+            <li>
+                <a href="{{ path('portada', { 'ciudad': ciudad_por_defecto}) }}">{{ "menu.dia" | trans }}</a>
+            </li>
+            <li>
+                <a href="{{ path('ciudad_reciente', { 'ciudad': ciudadSeleccionada, '_format': 'html' }) }}">{{ "menu.recientes" | trans }}</a>
+            </li>
+            <li>
+                <a href="{{ path('usuario_compras') }}">{{ "menu.mias" | trans }}</a>
+            </li>
+            <li>
+                {% render "CiudadBundle:Default:listaCiudades"
+                            with { 'ciudad': ciudadSeleccionada } %}
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<article>
+    {% block article %}{% endblock %}
+</article>
+
+<aside>
+    {% block aside %}
+        <section id="login">
+            {% render 'UsuarioBundle:Default:cajaLogin' %}
+        </section>
+    {% endblock %}
+</aside>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends '::backend.html.twig' %}
+
+{% block id 'oferta' %}
+{% block title %}Datos de la oferta{% endblock %}
+
+{% block article %}
+<h1>{{ block('title') }}</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td>{{ entity.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Slug</th>
+            <td>{{ entity.slug }}</td>
+        </tr>
+        <tr>
+            <th>Descripcion</th>
+            <td>{{ entity.descripcion }}</td>
+        </tr>
+        <tr>
+            <th>Condiciones</th>
+            <td>{{ entity.condiciones }}</td>
+        </tr>
+        <tr>
+            <th>Foto</th>
+            <td>{{ entity.foto }}</td>
+        </tr>
+        <tr>
+            <th>Precio</th>
+            <td>{{ entity.precio }}</td>
+        </tr>
+        <tr>
+            <th>Descuento</th>
+            <td>{{ entity.descuento }}</td>
+        </tr>
+        <tr>
+            <th>Fecha_publicacion</th>
+            <td>{{ entity.fechapublicacion|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Fecha_expiracion</th>
+            <td>{{ entity.fechaexpiracion|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Compras</th>
+            <td>{{ entity.compras }}</td>
+        </tr>
+        <tr>
+            <th>Umbral</th>
+            <td>{{ entity.umbral }}</td>
+        </tr>
+        <tr>
+            <th>Revisada</th>
+            <td>{{ entity.revisada }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('BackendPortada') }}">
+            Volver al listado
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('oferta_edit', { 'id': entity.id }) }}">
+            Modificar
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('oferta_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Borrar</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

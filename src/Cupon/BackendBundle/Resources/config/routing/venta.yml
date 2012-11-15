@@ -1,0 +1,19 @@
+backend_venta:
+    pattern: /
+    defaults: { _controller: "BackendBundle:Venta:index" }
+
+backend_venta_crear:
+    pattern: /crear
+    defaults: { _controller: "backendBundle:Venta:crear" }
+
+backend_venta_ver:
+    pattern: /ver/{idOferta}/{idUsuario}
+    defaults: { _controller: "BackendBundle:Venta:ver" }
+
+backend_venta_actualizar:
+    pattern: /actualizar/{idOferta}/{idUsuario}
+    defaults: { _controller: "BackendBundle:Venta:actualizar" }
+
+backend_venta_borrar:
+    pattern: /borrar/{idOferta}/{idUsuario}
+    defaults: { _controller: "BackendBundle:Venta:borrar" }

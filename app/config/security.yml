@@ -1,0 +1,63 @@
+security:
+    acl:
+        connection: default
+
+    firewalls:
+        backend:
+            pattern: ^/backend
+            provider: administradores
+            http_basic: ~
+
+        extranet:
+            pattern: ^/extranet
+            provider: tiendas
+            anonymous: ~
+            form_login:
+                login_path: extranet_login
+                check_path: extranet_login_check
+            logout:
+                path: extranet_logout
+            remember_me:
+                key: cupon12345
+                lifetime: 3600
+
+        frontend:
+            pattern: ^/*
+            provider: usuarios
+            anonymous: ~
+            form_login:
+                login_path: usuario_login
+                check_path: usuario_login_check
+            logout:
+                path: usuario_logout
+            remember_me:
+                key: cupon1234
+                lifetime: 3600
+
+    access_control:
+            - { path: ^/extranet/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/extranet/*, roles: ROLE_TIENDA }
+            - { path: ^/(es|en)/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/(es|en)/usuario/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/(es|en)/usuario/*, roles: ROLE_USUARIO }
+            - { path: ^/backend/*, roles: ROLE_ADMIN }
+
+    providers:
+        usuarios:
+            entity: { class: Cupon\UsuarioBundle\Entity\Usuario, property: email }
+
+        tiendas:
+            entity: { class: Cupon\TiendaBundle\Entity\Tienda, property: login }
+
+        administradores:
+            memory:
+                users:
+                    admin: { password: 1234, roles: ROLE_ADMIN }
+
+    encoders:
+        Cupon\UsuarioBundle\Entity\Usuario: { algorithm: sha512, iterations: 10 }
+        Cupon\TiendaBundle\Entity\Tienda: { algorithm: sha512, iterations: 10 }
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_TIENDA, ROLE_USUARIO]

@@ -1,0 +1,54 @@
+{% extends '::backend.html.twig' %}
+
+{% block id 'usuario' %}
+{% block title %}Listado de usuarios{% endblock %}
+
+{% block article %}
+<h1>{{ block('title') }}</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Email</th>
+            <th>Direccion</th>
+            <th>Fecha_alta</th>
+            <th>Fecha_nacimiento</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('backend_usuario_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nombre }}</td>
+            <td>{{ entity.apellidos }}</td>
+            <td>{{ entity.email }}</td>
+            <td>{{ entity.direccion }}</td>
+            <td>{% if entity.fechaalta %}{{ entity.fechaalta|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.fechanacimiento %}{{ entity.fechanacimiento|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('backend_usuario_show', { 'id': entity.id }) }}">Ver</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('backend_usuario_edit', { 'id': entity.id }) }}">Modificar</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('backend_usuario_new') }}">
+           Crear un nuevo usuario
+        </a>
+    </li>
+</ul>
+{% endblock %}

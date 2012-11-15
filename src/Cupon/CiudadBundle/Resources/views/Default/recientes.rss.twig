@@ -1,0 +1,38 @@
+{% extends '::base.rss.twig' %}
+
+{% block title %}{% spaceless %}
+Cupon - Ofertas recientes en {{ ciudad.nombre }}
+{% endspaceless %}{% endblock %}
+
+{% block url %}{% spaceless %}
+{{ url('ciudad_reciente', { 'ciudad': ciudad.slug, '_format': 'html' }) }}
+{% endspaceless %}{% endblock %}
+
+{% block descripcion %}{% spaceless %}
+Las ofertas más recientes publicadas por Cupon en {{ ciudad.nombre }}
+{% endspaceless %}{% endblock %}
+
+{% block self %}{% spaceless %}
+{{ url('ciudad_reciente', {'ciudad': ciudad.slug, '_format': 'rss'}) }}
+{% endspaceless %}{% endblock %}
+
+{% block items %}
+{% for oferta in ofertas %}
+{% set urlAbsolutaFoto = 'http://'
+                         ~ app.request.server.get('SERVER_NAME')
+                         ~ asset(directorio_imagenes ~ oferta.foto) %}
+<item>
+    <title>{{ oferta.nombre }}</title>
+    <link>{{ url('oferta', {'ciudad':    oferta.ciudad.slug,
+                            'slug':     oferta.slug}) }} </link>
+    <description><![CDATA[
+        <img alt="{{ oferta.nombre }}" src="{{ urlAbsolutaFoto }}" />
+        {{ oferta.descripcion | mostrar_como_lista }}
+        <a href="#">Comprar</a>
+    ]]></description>
+    <pubDate>{{ oferta.fechaPublicacion | date('r') }}</pubDate>
+    <guid>{{ url('oferta', { 'ciudad':  oferta.ciudad.slug,
+                             'slug':    oferta.slug }) }}</guid>
+</item>
+{% endfor %}
+{% endblock %}

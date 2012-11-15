@@ -1,0 +1,29 @@
+{% extends '::backend.html.twig' %}
+
+{% block id 'tienda' %}
+{% block title %}Datos de la tienda{% endblock %}
+
+{% block article %}
+<h1>{{ block('title') }}</h1>
+
+<form action="{{ path('backend_tienda_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Edit</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_tienda') }}">
+            Volver al listado
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('backend_tienda_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Borrar</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

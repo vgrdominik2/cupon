@@ -1,0 +1,23 @@
+{% extends '::backend.html.twig' %}
+
+{% block id 'venta' %}
+{% block title %}Modificar la venta{% endblock %}
+
+{% block article %}
+<h1>{{ block('title') }}</h1>
+
+<form action="{{ path('backend_venta_actualizar', { 'idOferta': venta.oferta.id, 'idUsuario': venta.usuario.id }) }}" method="post">
+    {{ form_widget(formulario) }}
+
+    <input type="submit" value="Guardar cambios" />
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_venta') }}">Volver al listado</a>
+    </li>
+    <li>
+        <a href="{{ path('backend_venta_borrar', { 'idOferta': venta.oferta.id, 'idUsuario': venta.usuario.id }) }}">Borrar</a>
+    </li>
+</ul>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% if is_granted('ROLE_USUARIO') %}
+
+    {% for tipo, mensajes in app.session.flashbag.all() %}
+        {% for mensaje in mensajes %}
+            <p class="flash-{{ tipo }}">{{ mensaje }}</p>
+        {% endfor %}
+    {% endfor %}
+
+    <p>Conectado como {{ app.user.nombre ~ ' ' ~ app.user.apellidos }}</p>
+
+    <a href="{{ path('usuario_perfil') }}">Ver mi perfil</a>
+    <a href="{{ path('usuario_logout') }}">Cerrar sesión</a>
+{% else %}
+    <a class="boton" href="{{ path('usuario_registro') }}">Regístrate</a>
+    <h2>Accede a tu cuenta</h2>
+
+    <form action="{{ path('usuario_login_check') }}" method="post">
+        {% if error is not null %}
+            <div>{{ error.message }}</div>
+        {% endif %}
+
+        <label for="login_user">Email</label>
+        <input id="login_user" type="login_user" type="text" name="_username" value="{{ last_username | default('') }}" />
+
+        <label for="login_pass">Contraseña</label>
+        <input id="login_pass" type="password" name="_password" />
+
+        <input type="submit" value="Entrar" />
+
+        <input type="checkbox" id="no_cerrar" name="_remember_me" checked />
+        <lavel for="no_cerrar">No cerrar sesión</lavel>
+    </form>
+{% endif %}

@@ -1,0 +1,37 @@
+{% extends '::backend.html.twig' %}
+
+{% block id 'venta' %}
+{% block title %}Datos de la venta{% endblock %}
+
+{% block article %}
+<h1>{{ block('title') }}</h1>
+
+<table class="record_properties">
+<tbody>
+    <tr>
+        <th>Fecha</th>
+        <td>{{ venta.fecha | date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>Oferta</th>
+        <td>{{ venta.oferta.nombre }}</td>
+    </tr>
+    <tr>
+        <th>Usuario</th>
+        <td>{{ venta.usuario.nombre }}</td>
+    </tr>
+</tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_venta') }}">Volver al listado</a>
+    </li>
+    <li>
+        <a href="{{ path('backend_venta_actualizar', { 'idOferta': venta.oferta.id, 'idUsuario': venta.usuario.id }) }}">Modificar</a>
+    </li>
+    <li>
+        <a href="{{ path('backend_venta_borrar', { 'idOferta': venta.oferta.id, 'idUsuario': venta.usuario.id }) }}">Borrar</a>
+    </li>
+</ul>
+{% endblock %}

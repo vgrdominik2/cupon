@@ -1,0 +1,18 @@
+{% extends '::frontend.html.twig' %}
+
+{% block title %}Cupon, cada día ofertas increíbles en tu ciudad
+con descuento de hasta el 90%{% endblock %}
+
+{% block id 'portada' %}
+
+{% block article %}
+    {% include 'OfertaBundle:Default:includes/oferta.html.twig' %}
+{% endblock %}
+
+{% block aside %}
+{{ parent() }}
+<section id="nosotros">
+    <h2>Sobre nosotros</h2>
+    <p>Lorem ipsum dolor sit amet...</p>
+</section>
+{% endblock %}

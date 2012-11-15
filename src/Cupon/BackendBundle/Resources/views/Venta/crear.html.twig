@@ -1,0 +1,20 @@
+{% extends '::backend.html.twig' %}
+
+{% block id 'venta' %}
+{% block title %}Crear una venta{% endblock %}
+
+{% block article %}
+<h1>{{ block('title') }}</h1>
+
+<form action="{{ path('backend_venta_crear') }}" method="post">
+    {{ form_widget(formulario) }}
+
+    <input type="submit" value="Crear" />
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_venta') }}">Volver al listado</a>
+    </li>
+</ul>
+{% endblock %}

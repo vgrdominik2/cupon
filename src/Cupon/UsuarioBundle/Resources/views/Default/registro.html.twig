@@ -1,0 +1,58 @@
+{% extends '::frontend.html.twig' %}
+
+{% block id 'usuario' %}
+{% block title %}Regístrate gratis como usuario{% endblock %}
+
+{% block article %}
+<h1>{{ block('title') }}</h1>
+
+<form action="{{ path('usuario_registro') }}" method="post" {{ form_enctype(formulario) }}>
+    {{ form_errors(formulario) }}
+
+    <fieldset>
+        <legend>Datos personales</legend>
+
+        <div>
+            {{ form_row(formulario.nombre) }}
+        </div>
+
+        <div>
+            {{ form_row(formulario.apellidos) }}
+        </div>
+
+        <div>
+            {{ form_row(formulario.fecha_nacimiento) }}
+        </div>
+
+        <div>
+            {{ form_row(formulario.dni) }}
+        </div>
+
+        <div>
+            {{ form_row(formulario.direccion) }}
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Datos de acceso</legend>
+
+        {{ form_row(formulario.email) }}
+        {{ form_row(formulario.password) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>Datos económicos</legend>
+
+        {{ form_row(formulario.numero_targeta) }}
+        {{ form_row(formulario.ciudad) }}
+    </fieldset>
+
+    {{ form_row(formulario.permite_email) }}
+
+    {{ form_rest(formulario) }}
+
+    <input class="boton" type="submit" value="Registrarme" />
+</form>
+{% endblock %}
+
+{% block aside %}{% endblock %}
