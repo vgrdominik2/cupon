@@ -2,46 +2,59 @@
 
 {% set ciudadSeleccionada = app.request.attributes.get('ciudad', ciudad_por_defecto) %}
 
-{% block stylesheets %}
-<link href="{{ asset('bundles/oferta/css/normalizar.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('bundles/oferta/css/comun.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('bundles/oferta/css/frontend.css') }}" rel="stylesheet" type="text/css" />
-{% endblock %}
 {% block javascripts %}
+{{ parent() }}
 <script src="{{ asset('bundles/oferta/js/frontend.js') }}"></script>
 {% endblock %}
 
 {% block body %}
 <header>
-    <h1><a href="{{ path('_portada') }}">CUPON</a></h1>
-    <nav>
-        <ul>
-            <li>
-                <a href="{{ path('portada', { 'ciudad': ciudad_por_defecto}) }}">{{ "menu.dia" | trans }}</a>
-            </li>
-            <li>
-                <a href="{{ path('ciudad_reciente', { 'ciudad': ciudadSeleccionada, '_format': 'html' }) }}">{{ "menu.recientes" | trans }}</a>
-            </li>
-            <li>
-                <a href="{{ path('usuario_compras') }}">{{ "menu.mias" | trans }}</a>
-            </li>
-            <li>
-                {% render "CiudadBundle:Default:listaCiudades"
-                            with { 'ciudad': ciudadSeleccionada } %}
-            </li>
-        </ul>
-    </nav>
+    <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+    <div class="container" style="margin-top: 5px;">
+    <a class="brand" href="{{ path('_portada') }}" style="font-size: 24px; font-weight: bold;">CUPON</a>
+
+    {% set currentPath = app.request.attributes.get('_route') %}
+
+    <ul class="nav">
+        <li {{ currentPath == 'portada' ? 'class="active"' : '' }}>
+            <a href="{{ path('portada', { 'ciudad': ciudad_por_defecto}) }}">{{ "menu.dia" | trans }}</a>
+        </li>
+        <li {{ currentPath == 'ciudad_reciente' ? 'class="active"' : '' }}>
+            <a href="{{ path('ciudad_reciente', { 'ciudad': ciudadSeleccionada, '_format': 'html' }) }}">{{ "menu.recientes" | trans }}</a>
+        </li>
+        <li {{ currentPath == 'usuario_compras' ? 'class="active"' : '' }}>
+            <a href="{{ path('usuario_compras') }}">{{ "menu.mias" | trans }}</a>
+        </li>
+    </ul>
+    <ul class="nav pull-right">
+        <li>
+            {% render "CiudadBundle:Default:listaCiudades"
+                        with { 'ciudad': ciudadSeleccionada } %}
+        </li>
+    </ul>
+    </div>
+    </div>
+    </div>
 </header>
 
-<article>
+<div class="container">
+<div class="row">
+<article class="span9" style="position: relative; top: 50px;">
     {% block article %}{% endblock %}
 </article>
 
-<aside>
+<aside class="span3" style="position: relative; top: 60px;">
     {% block aside %}
         <section id="login">
             {% render 'UsuarioBundle:Default:cajaLogin' %}
         </section>
     {% endblock %}
 </aside>
+</div>
+<div style="clear: both"></div>
+<div class="row" style="height: 100px;">
+    <div class="span12">&nbsp;</div>
+</div>
+</div>
 {% endblock %}

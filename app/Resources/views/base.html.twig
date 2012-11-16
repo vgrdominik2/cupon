@@ -3,7 +3,10 @@
     <head>
         <meta http-equiv="Content-Type" charset="text/html; charset=utf-8" />
         <title>{% block title %}{% endblock %} | Cupon</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+        <link href="{{ asset('bundles/oferta/lib/bootstrap/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/oferta/lib/bootstrap/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css" />
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
         {% block rss %}{% endblock %}
@@ -12,23 +15,43 @@
         {% block body %}{% endblock %}
 
         <footer>
-            &copy; {{ 'now' | date('Y') }} - Cupon
-            <a href="{{ path('pagina_estatica', { 'pagina': 'ayuda' }) }}">{{ 'ayuda' | trans }}</a>
-            <a href="{{ path('pagina_estatica', { 'pagina': 'contacto' }) }}">{{ 'contacto' | trans }}</a>
-            <a href="{{ path('pagina_estatica', { 'pagina': 'privacidad' }) }}">{{ 'privacidad' | trans }}</a>
-            <a href="{{ path('pagina_estatica', { 'pagina': 'sobre-nosotros' }) }}">{{ 'sobre.nosotros' | trans }}</a>
+            <div class="navbar navbar-fixed-bottom">
+            <div class="navbar-inner">
+            <div class="container" style="margin-top: 5px;">
+            <a href="{{ path('portada', { 'ciudad': ciudad_por_defecto}) }}" class="brand">&copy; {{ 'now' | date('Y') }} - Cupon</a>
+            <ul class="nav">
+                <li>
+                    <a href="{{ path('pagina_estatica', { 'pagina': 'ayuda' }) }}">{{ 'ayuda' | trans }}</a>
+                </li>
+                <li>
+                    <a href="{{ path('pagina_estatica', { 'pagina': 'contacto' }) }}">{{ 'contacto' | trans }}</a>
+                </li>
+                <li>
+                    <a href="{{ path('pagina_estatica', { 'pagina': 'privacidad' }) }}">{{ 'privacidad' | trans }}</a>
+                </li>
+                <li>
+                    <a href="{{ path('pagina_estatica', { 'pagina': 'sobre-nosotros' }) }}">{{ 'sobre.nosotros' | trans }}</a>
+                </li>
+            </ul>
 
             {% set locale = app.request.locale %}
 
-            {% if locale == 'es' %}
-                <span>{{ 'espanol' | trans }}</span>
-                <a href="{{ path('portada', { '_locale': 'en', 'ciudad': ciudad_por_defecto }) }}">{{ 'english' | trans }}</a>
-            {% elseif locale == 'en' %}
-                <a href="{{ path('portada', { '_locale': 'es', 'ciudad': ciudad_por_defecto}) }}">{{ 'espanol' | trans }}</a>
-                <span>{{ 'english' | trans }}</span>
-            {% endif %}
+            <ul class="nav pull-right" style="margin-top: 10px;">
+                {% if locale == 'es' %}
+                    <span>{{ 'espanol' | trans }}</span>
+                    <a href="{{ path('portada', { '_locale': 'en', 'ciudad': ciudad_por_defecto }) }}">{{ 'english' | trans }}</a>
+                {% elseif locale == 'en' %}
+                    <a href="{{ path('portada', { '_locale': 'es', 'ciudad': ciudad_por_defecto}) }}">{{ 'espanol' | trans }}</a>
+                    <span>{{ 'english' | trans }}</span>
+                {% endif %}
+            </ul>
+            </div>
+            </div>
+            </div>
         </footer>
 
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        <script {{ asset('bundles/oferta/lib/bootstrap/js/bootstrap.js') }}></script>
+        {% endblock %}
     </body>
 </html>

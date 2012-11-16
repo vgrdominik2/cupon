@@ -1,49 +1,70 @@
 {% set expirada = oferta.fechaExpiracion|date('YmdHis') < 'now'|date('YmdHis') %}
 {% set comprada = comprada | default(false) %}
 
-<section class="oferta mini">
-    <div class="descripcion">
-        <h2>
-            <a href="{{ path('oferta', { 'ciudad': oferta.ciudad.slug, 'slug': oferta.slug }) }}">
-                {{ oferta.nombre }}
-            </a>
-        </h2>
+<section class="oferta mini" style="position:relative; margin-top: 20px;">
+    <div class="row">
+        <section class="hero-unit" style="padding: 25px; margin-bottom: 7px;">
+            <h2><a href="{{ path('oferta', { 'ciudad': oferta.ciudad.slug, 'slug': oferta.slug}) }}">{{ oferta.nombre }}</a></h2>
 
+            {{ oferta.descripcion }}
 
-        {{ oferta.descripcion | mostrar_como_lista }}
-
-        {% if not expirada and not comprada %}
-        <a class="boton" href="#">Comprar</a>
-        {% endif %}
-
-        <div class="estado {{ expirada ? 'expirada' : '' }}">
-            {% if comprada %}
-                {{ 'Comprada el %fecha%.' | trans(
-                    { '%fecha%': fechaCompra | localizeddate() }
-                ) }}
-                <br />
-            {% endif %}
             {% if not expirada %}
-                {% trans with { '%fecha%': oferta.fechaExpiracion | cuenta_atras } %}
-                    <strong>Faltan</strong>: %fecha%
-                {% endtrans %}
-            {% else %}
-            Finalizada el {{ oferta.fechaExpiracion | localizeddate() }}
+            <p style="position: relative; width: 100%; text-align: right;">
+                <a class="btn btn-success" href="#">Comprar</a>
+            </p>
             {% endif %}
-        </div>
+        </section>
     </div>
 
-    <div class="galeria">
-        <img alt="Fotografía de la oferta" src="{{ asset(directorio_imagenes ~ oferta.foto) }}" />
+    <div class="row">
+        <div class="span4">
+            <img alt="Fotografía de la oferta" class="img-polaroid img-rounded"  src="{{ asset(directorio_imagenes ~ oferta.foto) }}" />
+        </div>
 
-        <p class="precio">{{ oferta.precio }} &euro;
-            <span>{{ descuento(oferta.precio, oferta.descuento) }}</span></p>
+        <dl class="span4">
+            {% if comprada %}
+            <dt>
+                Comprada el
+            </dt>
+            <dd>
+            {{ '%fecha%' | trans(
+                    { '%fecha%': fechaCompra | localizeddate() }
+                ) }}
+            </dd>
+            {% endif %}
+            {% if not expirada %}
+            <dt>
+                Faltan
+            </dt>
+            <dd>
+                {% trans with { '%fecha%': oferta.fechaExpiracion | cuenta_atras } %}
+                %fecha%
+                {% endtrans %}
+            </dd>
+            {% else %}
+            <dt>
+                Finalizada el
+            </dt>
+            <dd>
+                {{ oferta.fechaExpiracion | localizeddate() }}
+            </dd>
+            {% endif %}
 
-        <p>
-            Disfruta de esta oferta en
-            <a href="{{ path('tienda_portada', { 'ciudad': oferta.ciudad.slug, 'tienda': oferta.tienda.slug }) }}">
-                {{ oferta.tienda.nombre }}
-            </a>
-        </p>
+            <dt>
+                Precio
+            </dt>
+            <dd>
+                {{ descuento(oferta.precio, oferta.descuento) }}
+            </dd>
+
+            <dt>
+                Disfruta de esta oferta en
+            </dt>
+            <dd>
+                <a href="{{ path('tienda_portada', { 'ciudad': oferta.ciudad.slug, 'tienda': oferta.tienda.slug }) }}">
+                    {{ oferta.tienda.nombre }}
+                </a>
+            </dd>
+        </dl>
     </div>
 </section>

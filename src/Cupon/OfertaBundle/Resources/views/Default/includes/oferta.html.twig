@@ -1,65 +1,114 @@
 {% set expirada=oferta.fechaExpiracion|date('YmdHis') < 'now'|date('YmdHis') %}
-<section class="descripcion">
-    <h1><a href="{{ path('oferta', { 'ciudad': oferta.ciudad.slug, 'slug': oferta.slug}) }}">{{ oferta.nombre }}</a></h1>
+<section class="hero-unit">
+    <h1 style="font-size: 30px;"><a href="{{ path('oferta', { 'ciudad': oferta.ciudad.slug, 'slug': oferta.slug}) }}">{{ oferta.nombre }}</a></h1>
 
-    {{ oferta.descripcion | mostrar_como_lista }}
+    {{ oferta.descripcion }}
 
     {% if not expirada %}
-        <a class="boton" href="#">Comprar</a>
+        <p style="position: relative; width: 100%; text-align: right;">
+            <a class="btn btn-success" href="#">Comprar</a>
+        </p>
     {% endif %}
 </section>
 
-<section class="galeria">
-    <img alt="Fotografía de la oferta" src="{{ asset(directorio_imagenes ~ oferta.foto) }}" />
-    <p class="precio">{{ oferta.precio }} &euro;
-        <span>{{ descuento(oferta.precio, oferta.descuento) }}</span></p>
-    <p><strong>Condiciones:</strong> {{ oferta.condiciones }}</p>
-</section>
-
-<section class="estado {{ expirada ? 'expirada' : '' }}">
-{% if not expirada %}
-    <div id="tiempo">
-        {% trans with { '%fecha%': oferta.fechaExpiracion | cuenta_atras } %}
-            <strong>Faltan</strong>: %fecha%
-        {% endtrans %}
+<section class="row">
+    <div class="span4">
+        <img alt="Fotografía de la oferta" class="img-polaroid img-rounded" src="{{ asset(directorio_imagenes ~ oferta.foto) }}" />
     </div>
 
-    <div class="compras">
-        <strong>Compras</strong>: {{ oferta.compras }}
-    </div>
+    <div class="span4">
+        <dl>
+            <dt>
+                Precio
+            </dt>
+            <dd>
+                {{ oferta.precio }} &euro;
+            </dd>
+            <dt>
+                Descuento
+            </dt>
+            <dd>
+                <span>{{ descuento(oferta.precio, oferta.descuento) }}</span>
+            </dd>
+            <dt>
+                Condiciones:
+            </dt>
+            <dd>
+                {{ oferta.condiciones }}
+            </dd>
 
-    <div class="faltan">
-        {% set faltan = oferta.umbral - oferta.compras %}
-        {% if faltan > 0 %}
-        {# Si las compras no llegan al unmbral mínimo establecido #}
-                Faltan <strong>{{ faltan }} compras</strong> <br /> para activar la oferta
-        {% else %}
-        {# Si las compras superan l unmbral mínimo establecido #}
-                <strong>Oferta activada</strong> por superar las <strong>{{ oferta.umbral }}</strong> compras necesarias
-        {% endif %}
-    </div>
-{% else %}
-    <div class="tiempo">
-        <strong>Finalizar</strong> el {{ oferta.fechaExpiracion | localizeddate() }}
-    </div>
+            {% if not expirada %}
+                <dt>
+                    Faltan
+                </dt>
+                <dd>
+                <div id="tiempo">
+                    {% trans with { '%fecha%': oferta.fechaExpiracion | cuenta_atras } %}
+                        %fecha%
+                    {% endtrans %}
+                </div>
+                </dd>
 
-    <div class="compras">
-        <strong>Compras</strong>: {{ oferta.compras }}
+                <dt>
+                    Compras
+                </dt>
+                <dd>
+                    {{ oferta.compras }}
+                </dd>
+
+                <div class="faltan">
+                    {% set faltan = oferta.umbral - oferta.compras %}
+                    {% if faltan > 0 %}
+                    {# Si las compras no llegan al unmbral mínimo establecido #}
+                        <dt>
+                            Faltan
+                        </dt>
+                        <dd>
+                            <strong>{{ faltan }} compras</strong> <br /> para activar la oferta
+                        </dd>
+                    {% else %}
+                    {# Si las compras superan l unmbral mínimo establecido #}
+                        <dt>
+                            Oferta activada
+                        </dt>
+                        <dd>
+                            Por superar las <strong>{{ oferta.umbral }}</strong> compras necesarias
+                        </dd>
+                    {% endif %}
+                </div>
+            {% else %}
+                <dt>
+                    Finalizar
+                </dt>
+                <dd>
+                    {{ oferta.fechaExpiracion | localizeddate() }}
+                </dd>
+
+                <dt>
+                    Compras
+                </dt>
+                <dd>
+                    {{ oferta.compras }}
+                </dd>
+            {% endif %}
+
+        <dt>
+            Disfruta de la oferta en...
+        </dt>
+        <dd>
+            <p>
+                <a href="{{ path('tienda_portada', { 'ciudad': oferta.ciudad.slug, 'tienda': oferta.tienda.slug }) }}">
+                    {{ oferta.tienda.nombre }}
+                </a>
+                {{ oferta.tienda.direccion }}
+            </p>
+        </dd>
+
+        <dt>
+            Sobre la tienda
+        </dt>
+        <dd>
+            {{ oferta.tienda.descripcion | wordwrap(40) | nl2br }}
+        </dd>
     </div>
-{% endif %}
-</section>
-
-<section class="direccion">
-    <h2>Disfruta de la oferta en</h2>
-    <p>
-        <a href="{{ path('tienda_portada', { 'ciudad': oferta.ciudad.slug, 'tienda': oferta.tienda.slug }) }}">
-            {{ oferta.tienda.nombre }}
-        </a>
-        {{ oferta.tienda.direccion }}
-    </p>
-</section>
-
-<section class="tienda">
-    <h2>Sobre la tienda</h2>
-    {{ oferta.tienda.descripcion | wordwrap(40) | nl2br }}
 </section>

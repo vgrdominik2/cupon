@@ -1,40 +1,52 @@
 {% extends '::base.html.twig' %}
 
-{% block stylesheets %}
-<link href="{{ asset('bundles/oferta/css/normalizar.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('bundles/oferta/css/comun.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('bundles/backend/css/backend.css') }}" rel="stylesheet" type="text/css" />
-{% endblock %}
-
 {% block body %}
 <header>
-    <h1><a href="{{ path('BackendPortada') }}">Ofertas</a></h1>
-    <nav>
-        <ul>
-            <li>
+    <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+    <div class="container" style="margin-top: 5px;">
+        <a class="brand" href="{{ path('BackendPortada') }}" style="font-size: 24px; font-weight: bold;">CUPON BACKEND</a>
+
+        {% set currentPath = app.request.attributes.get('_route') %}
+
+        <ul class="nav">
+            <li {{ currentPath == 'BackendPortada' ? 'class="active"' : '' }}>
                 <a href="{{ path('BackendPortada') }}">Ofertas</a>
             </li>
-            <li>
+            <li {{ currentPath == 'backend_tienda' ? 'class="active"' : '' }}>
                 <a href="{{ path('backend_tienda') }}">Tiendas</a>
             </li>
-            <li>
+            <li {{ currentPath == 'backend_usuario' ? 'class="active"' : '' }}>
                 <a href="{{ path('backend_usuario') }}">Usuarios</a>
             </li>
-            <li>
+            <li {{ currentPath == 'backend_ciudad' ? 'class="active"' : '' }}>
                 <a href="{{ path('backend_ciudad') }}">Ciudades</a>
             </li>
-            <li>
+            <li {{ currentPath == 'backend_venta' ? 'class="active"' : '' }}>
                 <a href="{{ path('backend_venta') }}">Ventas</a>
             </li>
+        </ul>
+
+        <ul class="nav pull-right">
             <li>
                 {% render "CiudadBundle:Default:listaCiudades"
                     with { 'ciudad': app.session.get('ciudad') } %}
             </li>
         </ul>
-    </nav>
+    </div>
+    </div>
+    </div>
 </header>
 
-<article>
+<div class="container">
+<div class="row">
+<article class="span12">
     {% block article %}{% endblock %}
 </article>
+</div>
+<div style="clear: both"></div>
+<div class="row" style="height: 100px;">
+    <div class="span12">&nbsp;</div>
+</div>
+</div>
 {% endblock %}

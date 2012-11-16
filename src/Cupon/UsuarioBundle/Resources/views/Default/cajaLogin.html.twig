@@ -11,8 +11,8 @@
     <a href="{{ path('usuario_perfil') }}">Ver mi perfil</a>
     <a href="{{ path('usuario_logout') }}">Cerrar sesión</a>
 {% else %}
-    <a class="boton" href="{{ path('usuario_registro') }}">Regístrate</a>
-    <h2>Accede a tu cuenta</h2>
+    <a class="btn btn-info btn-large" href="{{ path('usuario_registro') }}">Regístrate</a>
+    <h3>Accede a tu cuenta</h3>
 
     <form action="{{ path('usuario_login_check') }}" method="post">
         {% if error is not null %}
@@ -20,14 +20,14 @@
         {% endif %}
 
         <label for="login_user">Email</label>
-        <input id="login_user" type="login_user" type="text" name="_username" value="{{ last_username | default('') }}" />
+        <input id="login_user" type="text" name="_username" value="{{ last_username | default('') }}" />
 
         <label for="login_pass">Contraseña</label>
         <input id="login_pass" type="password" name="_password" />
 
-        <input type="submit" value="Entrar" />
+        <input type="submit" class="btn btn-primary" value="Entrar" />
 
-        <input type="checkbox" id="no_cerrar" name="_remember_me" checked />
+        <input type="checkbox" id="no_cerrar" name="_remember_me" checked="checked" />
         <lavel for="no_cerrar">No cerrar sesión</lavel>
     </form>
 {% endif %}

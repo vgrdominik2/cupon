@@ -3,6 +3,39 @@
 {% block id 'usuario' %}
 {% block title %}Regístrate gratis como usuario{% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('bundles/usuario/lib/jquery-ui/js/jquery-1.8.2.js') }}"></script>
+<script src="{{ asset('bundles/usuario/lib/jquery-ui/js/jquery-ui-1.9.1.custom.js') }}"></script>
+<script src="{{ asset('bundles/usuario/js/registro.js') }}"></script>
+<script src="{{ asset('bundles/usuario/lib/tiny_mce/tiny_mce.js') }}"></script>
+
+<script type="text/javascript">
+$( "#datepicker" ).datepicker( {
+onSelect: function(date, dateObject)
+{
+    document.getElementById('cupon_usuariobundle_usuariotype_fecha_nacimiento_year').value = dateObject.currentYear;
+    document.getElementById('cupon_usuariobundle_usuariotype_fecha_nacimiento_month').value = dateObject.currentMonth;
+    document.getElementById('cupon_usuariobundle_usuariotype_fecha_nacimiento_day').value = dateObject.currentDay;
+
+},
+changeMonth: true,
+changeYear: true,
+minDate: "-90Y",
+maxDate: "-5Y"
+});
+$( "#datepicker" ).hide();
+tinyMCE.init({
+    mode: "textareas"
+});
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/usuario/lib/jquery-ui/css/black-tie/jquery-ui-1.9.1.custom.css') }}">
+{% endblock %}
+
 {% block article %}
 <h1>{{ block('title') }}</h1>
 
@@ -22,6 +55,11 @@
 
         <div>
             {{ form_row(formulario.fecha_nacimiento) }}
+            <div id="datepicker" style="position:relative; float:left;"></div>
+            <div style="position:relative; float:right;">
+                <img onclick="abrirCalendario()" id="imgCalendar" width="70%" src="{{ asset('bundles/usuario/img/calendar.png') }}" alt="Abrir calendario" />
+            </div>
+            <div style="clear: both;"></div>
         </div>
 
         <div>
@@ -51,7 +89,10 @@
 
     {{ form_rest(formulario) }}
 
-    <input class="boton" type="submit" value="Registrarme" />
+    <br />
+    <center>
+        <input class="btn btn-success btn-large" type="submit" value="Registrarme" />
+    </center>
 </form>
 {% endblock %}
 

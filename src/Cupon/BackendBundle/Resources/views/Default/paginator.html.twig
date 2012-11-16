@@ -1,0 +1,56 @@
+<div class="pagination" style="text-align: center;">
+    <ul>
+        {% if currentPage == minPage %}
+            <li class="active">
+                <a href="#">Primera</a>
+            </li>
+        {% else %}
+            {% set rParams= {'page': minPage, 'paginatorId': id} | merge(routeParams) %}
+            <li>
+                <a href="{{ path(route, rParams) }}">Primera</a>
+            </li>
+        {% endif %}
+        {% if currentPage == minPage %}
+            <li class="disabled">
+                <a href="#">Previa</a>
+            </li>
+        {% else %}
+            {% set rParams= {'page': currentPage - 1, 'paginatorId': id} | merge(routeParams) %}
+            <li>
+                <a href="{{ path(route, rParams) }}">Previa</a>
+            </li>
+        {% endif %}
+        {% for page in minPage..maxPage %}
+        {% if page == currentPage %}
+            <li class="active">
+                <a href="#">{{ page }}</a>
+            </li>
+        {% else %}
+            {% set rParams= {'page': page, 'paginatorId': id} | merge(routeParams) %}
+            <li>
+                <a href="{{ path(route, rParams) }}">{{ page }}</a>
+            </li>
+        {% endif %}
+        {% endfor %}
+        {% if currentPage == maxPage %}
+            <li class="disabled">
+                <a href="#">Próxima</a>
+            </li>
+        {% else %}
+            {% set rParams= {'page': currentPage + 1, 'paginatorId': id} | merge(routeParams) %}
+            <li>
+                <a href="{{ path(route, rParams) }}">Próxima</a>
+            </li>
+        {% endif %}
+        {% if currentPage == maxPage %}
+            <li class="active">
+                <a href="#">Última</a>
+            </li>
+        {% else %}
+            {% set rParams= {'page': maxPage, 'paginatorId': id} | merge(routeParams) %}
+            <li>
+                <a href="{{ path(route, rParams) }}">Última</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
